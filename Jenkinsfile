@@ -27,11 +27,19 @@ pipeline {
                                  fingerprint: true
             }
         }
+
+        stage('Deploy Locally') {
+            steps {
+                bat 'if not exist deploy mkdir deploy'
+                bat 'copy /Y target\\devops-webapp-1.0-SNAPSHOT.jar deploy\\devops-webapp.jar'
+                bat 'dir deploy'
+            }
+        }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'CI/CD pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed. Check the console output.'
